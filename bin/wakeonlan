@@ -1,0 +1,34 @@
+#!/usr/bin/env ruby
+
+require "optparse"
+
+require_relative "../lib/net/mac_address"
+require_relative "../lib/net/wol"
+
+options = {}
+
+optparse = OptionParser.new do |opts|
+  opts.banner = "Usage: wakeonlan [options]"
+
+  opts.on("-m", "--mac-address ADDRESS", "MAC address to send wake-on-lan to") do |address|
+    options[:mac_address] = address
+  end
+  
+  opts.on("-h", "--help", "Display usage information") do
+    puts opts
+    exit
+  end
+  
+end
+
+begin
+  optparse.parse!
+  if options[:mac_address].nil?
+    puts optparse
+    exit
+  else
+    mac_address = Net::MacAddress.new(options[:mac_address])
+    Net::Wol.send(mac_address.octets)
+    puts "Wake-on-lan packet sent to #{mac_address}"
+  end
+end
