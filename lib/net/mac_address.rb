@@ -25,21 +25,21 @@ module Net
       # six integers.
   		@octets = []
 
-      if mac_address.downcase =~ /([a-z0-9]{2}-){5}[a-z0-9]{2}/
+      if mac_address.downcase =~ /([a-f0-9]{2}-){5}[a-f0-9]{2}/
 
         # Matches format: "01:23:45:67:89:ab"
 	      mac_address.split("-").each do |number|
 			    octets << number.to_i(16)
 			  end
 
-      elsif mac_address.downcase =~ /([a-z0-9]{2}:){5}[a-z0-9]{2}/
+      elsif mac_address.downcase =~ /([a-f0-9]{2}:){5}[a-f0-9]{2}/
         
         # Matches format: "01-23-45-67-89-ab"	
       	mac_address.split(":").each do |number|
 				  octets << number.to_i(16)
 			  end
 
-      elsif mac_address.downcase =~ /[a-z0-9]{4}\.[a-z0-9]{4}\.[a-z0-9]{4}/
+      elsif mac_address.downcase =~ /[a-f0-9]{4}\.[a-f0-9]{4}\.[a-f0-9]{4}/
         	
         # Matches format: "0123.4567.89ab"
       	mac_address.split(".").each do |number|
