@@ -1,7 +1,6 @@
 require 'socket'
 
-module Net
-
+module MagicPacket
   # Sends a wake-on-lan magic packet to the specified address and port.
   # Link: http://en.wikipedia.org/wiki/Wake-on-LAN
   module Wol
@@ -30,14 +29,13 @@ module Net
 
 	  		# Refer to setsockopt() function in sys/socket.h for 
 	  		# additional information on options.
-			 socket.setsockopt(Socket::SOL_SOCKET, Socket::SO_BROADCAST, true)
+			  socket.setsockopt(Socket::SOL_SOCKET, Socket::SO_BROADCAST, true)
 			
-			 socket.send(payload.pack("C" * payload.length), 0, '<broadcast>', 9)
-			 socket.close
+			  socket.send(payload.pack("C" * payload.length), 0, '<broadcast>', 9)
+			  socket.close
       end
 
 	   end
   
   end
-
 end

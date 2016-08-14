@@ -1,23 +1,23 @@
-require "net/wol"
-require "net/mac_address"
+require 'spec_helper'
+require 'magic_packet'
 
-module Net
-  
+module MagicPacket
+
   describe Wol, "payload" do
 
   	before(:each) do
-  		@mac_address = Net::MacAddress.new("01-23-45-67-89-0A")
+  		@mac_address = MagicPacket::MacAddress.new("01-23-45-67-89-0A")
   	end
 
   	it "should contain 102 bytes" do
   		Wol.send(@mac_address.octets) do |payload|
-  			payload.length.should == 102
+  			expect(payload.length).to eq(102)
   		end
   	end
 
   	it "should have the first six bytes as 0xFF" do
   		Wol.send(@mac_address.octets) do |payload|
-  			payload[0..5].should == [255,255,255,255,255,255]
+  			expect(payload[0..5]).to eq([255,255,255,255,255,255])
   		end
   	end
 
@@ -28,7 +28,7 @@ module Net
   		end
 
   		Wol.send(@mac_address.octets) do |payload|
-  			payload.should == expected_value
+  			expect(payload).to eq(expected_value)
   		end
   	end
 	
